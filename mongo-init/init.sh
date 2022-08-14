@@ -1,0 +1,1 @@
+mongoimport --db crud-user --collection countries --type json --file /tmp/country-data.json --jsonArray

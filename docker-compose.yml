@@ -1,0 +1,26 @@
+version: "3"
+services:
+  api:
+    build: github.com/tariellaelius/Demo-on-NestJS.git
+    ports:
+      - "8080:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: mongodb://crud-db:27017/crud-user
+    container_name: crud-example
+  client:
+    build: github.com/tariellaelius/Demo-on-Angular.git
+    ports:
+      - "80:80"
+    container_name: crud-client
+  db:
+    image: mongo
+    volumes:
+      - ./mongo-init/:/docker-entrypoint-initdb.d/:ro
+      - ./country-data.json:/tmp/country-data.json:ro
+    environment:
+      MONGO_INITDB_DATABASE: crud-user
+    ports:
+      - "27017:27017"
+    container_name: crud-db
